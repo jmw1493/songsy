@@ -1,0 +1,7 @@
+1. finish the demo
+2. make login
+3. design db and s3 structure
+4. make upload song (profile page) (only thing on the page right now)
+5. make retrieve song and cover art (explore page) (only one song on explore page right now)
+6. fill out explore page
+7. fill out profile page and login pages
