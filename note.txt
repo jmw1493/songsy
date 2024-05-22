@@ -1,7 +1,27 @@
-1. finish the demo
-2. make login
+x - 1. finish the demo
+x - 2. make login
 3. design db and s3 structure
+  - db entities and relationships
+    - user
+      - id
+      - username
+      - email
+      - # songs - user can have many songs
+    - song
+      - id
+      - title
+      - songUrl - s3 url
+      - coverArtUrl - s3 url
+      - userId - user who created song (songs can only have one)
+    - likes
+      - id
+      - userId
+      - songId
+      - # likes belong to one user
+      - # user can have many likes
+      - # songs can have many likes
 4. make upload song (profile page) (only thing on the page right now)
 5. make retrieve song and cover art (explore page) (only one song on explore page right now)
 6. fill out explore page
 7. fill out profile page and login pages
+8. add ability to like songs, which save to your profile to listen later
