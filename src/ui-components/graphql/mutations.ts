@@ -19,21 +19,6 @@ export const createSong = /* GraphQL */ `
     }
   }
 `;
-export const createTodo = /* GraphQL */ `
-  mutation CreateTodo(
-    $condition: ModelTodoConditionInput
-    $input: CreateTodoInput!
-  ) {
-    createTodo(condition: $condition, input: $input) {
-      content
-      createdAt
-      id
-      owner
-      updatedAt
-      __typename
-    }
-  }
-`;
 export const deleteSong = /* GraphQL */ `
   mutation DeleteSong(
     $condition: ModelSongConditionInput
@@ -51,21 +36,6 @@ export const deleteSong = /* GraphQL */ `
     }
   }
 `;
-export const deleteTodo = /* GraphQL */ `
-  mutation DeleteTodo(
-    $condition: ModelTodoConditionInput
-    $input: DeleteTodoInput!
-  ) {
-    deleteTodo(condition: $condition, input: $input) {
-      content
-      createdAt
-      id
-      owner
-      updatedAt
-      __typename
-    }
-  }
-`;
 export const updateSong = /* GraphQL */ `
   mutation UpdateSong(
     $condition: ModelSongConditionInput
@@ -78,21 +48,6 @@ export const updateSong = /* GraphQL */ `
       owner
       songUrl
       title
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const updateTodo = /* GraphQL */ `
-  mutation UpdateTodo(
-    $condition: ModelTodoConditionInput
-    $input: UpdateTodoInput!
-  ) {
-    updateTodo(condition: $condition, input: $input) {
-      content
-      createdAt
-      id
-      owner
       updatedAt
       __typename
     }

@@ -157,7 +157,6 @@ export default function SongCreateForm(props) {
         acceptedFileTypes={["audio/*"]}
         processFile={processFile}
         onUploadSuccess={({ key }) => {
-          // assuming you have an attribute called 'images' on your data model that is an array of strings
           setSongUrl(key);
         }}
         onFileRemove={({ key }) => {
@@ -170,7 +169,6 @@ export default function SongCreateForm(props) {
         acceptedFileTypes={["image/*"]}
         processFile={processFile}
         onUploadSuccess={({ key }) => {
-          // assuming you have an attribute called 'images' on your data model that is an array of strings
           setCoverArtUrl(key);
         }}
         onFileRemove={({ key }) => {

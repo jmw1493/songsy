@@ -19,21 +19,6 @@ export const onCreateSong = /* GraphQL */ `
     }
   }
 `;
-export const onCreateTodo = /* GraphQL */ `
-  subscription OnCreateTodo(
-    $filter: ModelSubscriptionTodoFilterInput
-    $owner: String
-  ) {
-    onCreateTodo(filter: $filter, owner: $owner) {
-      content
-      createdAt
-      id
-      owner
-      updatedAt
-      __typename
-    }
-  }
-`;
 export const onDeleteSong = /* GraphQL */ `
   subscription OnDeleteSong(
     $filter: ModelSubscriptionSongFilterInput
@@ -51,21 +36,6 @@ export const onDeleteSong = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteTodo = /* GraphQL */ `
-  subscription OnDeleteTodo(
-    $filter: ModelSubscriptionTodoFilterInput
-    $owner: String
-  ) {
-    onDeleteTodo(filter: $filter, owner: $owner) {
-      content
-      createdAt
-      id
-      owner
-      updatedAt
-      __typename
-    }
-  }
-`;
 export const onUpdateSong = /* GraphQL */ `
   subscription OnUpdateSong(
     $filter: ModelSubscriptionSongFilterInput
@@ -78,21 +48,6 @@ export const onUpdateSong = /* GraphQL */ `
       owner
       songUrl
       title
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onUpdateTodo = /* GraphQL */ `
-  subscription OnUpdateTodo(
-    $filter: ModelSubscriptionTodoFilterInput
-    $owner: String
-  ) {
-    onUpdateTodo(filter: $filter, owner: $owner) {
-      content
-      createdAt
-      id
-      owner
       updatedAt
       __typename
     }
