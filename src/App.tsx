@@ -3,6 +3,7 @@ import "@aws-amplify/ui-react/styles.css";
 import "./App.css";
 import { useState } from "react";
 import ProfilePage from "./ProfilePage";
+import ExplorePage from "./ExplorePage";
 
 function App() {
   const [page, setPage] = useState("profile");
@@ -23,7 +24,7 @@ function App() {
               <button onClick={signOut}>Sign out</button>
             </div>
           </header>
-          <main>{page === "profile" ? <ProfilePage /> : <div></div>}</main>
+          <main>{page === "profile" ? <ProfilePage /> : <ExplorePage />}</main>
         </div>
       )}
     </Authenticator>
