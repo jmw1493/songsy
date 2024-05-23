@@ -3,15 +3,11 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateSong = /* GraphQL */ `
-  subscription OnCreateSong(
-    $filter: ModelSubscriptionSongFilterInput
-    $owner: String
-  ) {
-    onCreateSong(filter: $filter, owner: $owner) {
+  subscription OnCreateSong($filter: ModelSubscriptionSongFilterInput) {
+    onCreateSong(filter: $filter) {
       coverArtUrl
       createdAt
       id
-      owner
       songUrl
       title
       updatedAt
@@ -20,15 +16,11 @@ export const onCreateSong = /* GraphQL */ `
   }
 `;
 export const onDeleteSong = /* GraphQL */ `
-  subscription OnDeleteSong(
-    $filter: ModelSubscriptionSongFilterInput
-    $owner: String
-  ) {
-    onDeleteSong(filter: $filter, owner: $owner) {
+  subscription OnDeleteSong($filter: ModelSubscriptionSongFilterInput) {
+    onDeleteSong(filter: $filter) {
       coverArtUrl
       createdAt
       id
-      owner
       songUrl
       title
       updatedAt
@@ -37,15 +29,11 @@ export const onDeleteSong = /* GraphQL */ `
   }
 `;
 export const onUpdateSong = /* GraphQL */ `
-  subscription OnUpdateSong(
-    $filter: ModelSubscriptionSongFilterInput
-    $owner: String
-  ) {
-    onUpdateSong(filter: $filter, owner: $owner) {
+  subscription OnUpdateSong($filter: ModelSubscriptionSongFilterInput) {
+    onUpdateSong(filter: $filter) {
       coverArtUrl
       createdAt
       id
-      owner
       songUrl
       title
       updatedAt

@@ -11,7 +11,6 @@ export const createSong = /* GraphQL */ `
       coverArtUrl
       createdAt
       id
-      owner
       songUrl
       title
       updatedAt
@@ -28,7 +27,6 @@ export const deleteSong = /* GraphQL */ `
       coverArtUrl
       createdAt
       id
-      owner
       songUrl
       title
       updatedAt
@@ -45,7 +43,6 @@ export const updateSong = /* GraphQL */ `
       coverArtUrl
       createdAt
       id
-      owner
       songUrl
       title
       updatedAt

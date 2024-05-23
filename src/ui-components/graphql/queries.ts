@@ -8,7 +8,6 @@ export const getSong = /* GraphQL */ `
       coverArtUrl
       createdAt
       id
-      owner
       songUrl
       title
       updatedAt
@@ -27,7 +26,6 @@ export const listSongs = /* GraphQL */ `
         coverArtUrl
         createdAt
         id
-        owner
         songUrl
         title
         updatedAt

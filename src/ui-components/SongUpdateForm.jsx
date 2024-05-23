@@ -57,8 +57,8 @@ export default function SongUpdateForm(props) {
   React.useEffect(resetStateValues, [songRecord]);
   const validations = {
     title: [{ type: "Required" }],
-    songUrl: [{ type: "Required" }, { type: "URL" }],
-    coverArtUrl: [{ type: "Required" }, { type: "URL" }],
+    songUrl: [{ type: "Required" }],
+    coverArtUrl: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,

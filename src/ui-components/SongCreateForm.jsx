@@ -1,14 +1,15 @@
 /* eslint-disable */
 "use client";
 import * as React from "react";
-// import the processFile helper function which will create unique filenames based on the file contents
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { StorageManager } from "@aws-amplify/ui-react-storage";
-import { createSong } from "./graphql/mutations";
-import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import {
+  fetchByPath,
+  getOverrideProps,
+  processFile,
+  validateField,
+} from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { processFile } from "./utils";
-
+import { createSong } from "./graphql/mutations";
 const client = generateClient();
 export default function SongCreateForm(props) {
   const {
@@ -40,8 +41,8 @@ export default function SongCreateForm(props) {
   };
   const validations = {
     title: [{ type: "Required" }],
-    songUrl: [{ type: "Required" }, { type: "URL" }],
-    coverArtUrl: [{ type: "Required" }, { type: "URL" }],
+    songUrl: [{ type: "Required" }],
+    coverArtUrl: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -152,20 +153,8 @@ export default function SongCreateForm(props) {
         {...getOverrideProps(overrides, "title")}
       ></TextField>
       <StorageManager
-        accessLevel="public"
         maxFileCount={1}
-        acceptedFileTypes={["audio/*"]}
-        processFile={processFile}
-        onUploadSuccess={({ key }) => {
-          setSongUrl(key);
-        }}
-        onFileRemove={({ key }) => {
-          setSongUrl(undefined);
-        }}
-      />
-      <StorageManager
-        accessLevel="public"
-        maxFileCount={1}
+        path="image/"
         acceptedFileTypes={["image/*"]}
         processFile={processFile}
         onUploadSuccess={({ key }) => {
@@ -173,6 +162,18 @@ export default function SongCreateForm(props) {
         }}
         onFileRemove={({ key }) => {
           setCoverArtUrl(undefined);
+        }}
+      />
+      <StorageManager
+        maxFileCount={1}
+        path="audio/"
+        acceptedFileTypes={["audio/*"]}
+        processFile={processFile}
+        onUploadSuccess={({ key }) => {
+          setSongUrl(key);
+        }}
+        onFileRemove={({ key }) => {
+          setSongUrl(undefined);
         }}
       />
       <Flex
