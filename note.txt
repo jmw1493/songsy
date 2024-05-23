@@ -1,6 +1,6 @@
 x - 1. finish the demo
 x - 2. make login
-3. design db and s3 structure
+x - 3. design db and s3 structure
   - db entities and relationships
     - user
       - id
@@ -20,7 +20,7 @@ x - 2. make login
       - # likes belong to one user
       - # user can have many likes
       - # songs can have many likes
-4. make upload song (profile page) (only thing on the page right now)
+x - 4. make upload song (profile page) (only thing on the page right now)
 5. make retrieve song and cover art (explore page) (only one song on explore page right now)
 6. fill out explore page
 7. fill out profile page and login pages

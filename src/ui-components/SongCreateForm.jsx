@@ -35,6 +35,7 @@ export default function SongCreateForm(props) {
     initialValues.coverArtUrl
   );
   const [errors, setErrors] = React.useState({});
+  const [submissionMessage, setSubmissionMessage] = React.useState("");
   const resetStateValues = () => {
     setTitle(initialValues.title);
     setSongUrl(initialValues.songUrl);
@@ -132,10 +133,12 @@ export default function SongCreateForm(props) {
           if (clearOnSuccess) {
             resetStateValues();
           }
+          setSubmissionMessage("Song submitted successfully!");
         } catch (err) {
           if (onError) {
             const messages = err.errors.map((e) => e.message).join("\n");
             onError(modelFields, messages);
+            setSubmissionMessage(`Error submitting song: ${messages}`);
           }
         }
       }}
@@ -182,6 +185,7 @@ export default function SongCreateForm(props) {
         onFileRemove={({ key }) => {
           setCoverArtUrl(undefined);
         }}
+        clearOnSuccess
       />
       <StorageManager
         displayText={{
@@ -197,6 +201,7 @@ export default function SongCreateForm(props) {
         onFileRemove={({ key }) => {
           setSongUrl(undefined);
         }}
+        clearOnSuccess
       />
       <Flex
         justifyContent="space-between"
