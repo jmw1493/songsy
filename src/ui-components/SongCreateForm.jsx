@@ -71,11 +71,10 @@ export default function SongCreateForm(props) {
     };
     try {
       const compressedFile = await imageCompression(file, options);
-      const finalFile = await processFile({ file: compressedFile, key: key });
-      return finalFile;
-    } catch (error) {
-      console.error("Image compression error:", error);
-      return file; // Fallback to the original file in case of an error
+      const returnObj = await processFile({ file: compressedFile });
+      return returnObj;
+    } catch (e) {
+      return { file, key };
     }
   };
   return (

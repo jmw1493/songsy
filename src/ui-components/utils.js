@@ -728,18 +728,18 @@ const checkValidation = (value, validation) => {
   }
 };
 const monthToShortMon = {
-  "1": "Jan",
-  "2": "Feb",
-  "3": "Mar",
-  "4": "Apr",
-  "5": "May",
-  "6": "Jun",
-  "7": "Jul",
-  "8": "Aug",
-  "9": "Sep",
-  "10": "Oct",
-  "11": "Nov",
-  "12": "Dec",
+  1: "Jan",
+  2: "Feb",
+  3: "Mar",
+  4: "Apr",
+  5: "May",
+  6: "Jun",
+  7: "Jul",
+  8: "Aug",
+  9: "Sep",
+  10: "Oct",
+  11: "Nov",
+  12: "Dec",
 };
 const invalidDateStr = "Invalid Date";
 export function formatDate(date, dateFormat) {
@@ -844,14 +844,11 @@ export const fetchByPath = (input, path, accumlator = []) => {
 };
 export const processFile = async ({ file }) => {
   const fileExtension = file.name.split(".").pop();
-  return file
-    .arrayBuffer()
-    .then((filebuffer) => window.crypto.subtle.digest("SHA-1", filebuffer))
-    .then((hashBuffer) => {
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashHex = hashArray
-        .map((a) => a.toString(16).padStart(2, "0"))
-        .join("");
-      return { file, key: `${hashHex}.${fileExtension}` };
-    });
+  const fileBuffer = await file.arrayBuffer();
+  const hashBuffer = await window.crypto.subtle.digest("SHA-1", fileBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((a) => a.toString(16).padStart(2, "0"))
+    .join("");
+  return { file, key: `${hashHex}.${fileExtension}` };
 };
