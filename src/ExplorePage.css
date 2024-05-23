@@ -1,0 +1,24 @@
+.slider-container {
+  display: flex;
+  justify-content: center;
+}
+
+.songs-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* display: grid; */
+  /* grid-template-columns: repeat(auto-fill); */
+  gap: 16px;
+}
+
+.song-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.song-item img {
+  width: 100%;
+  height: auto;
+}

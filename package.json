@@ -16,9 +16,12 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.18",
+    "@types/react-lazyload": "^3.2.3",
     "aws-amplify": "^6.2.0",
+    "browser-image-compression": "^2.0.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-lazyload": "^3.2.1"
   },
   "devDependencies": {
     "@aws-amplify/backend": "^1.0.0",

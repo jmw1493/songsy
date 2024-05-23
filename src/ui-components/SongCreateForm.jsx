@@ -11,6 +11,7 @@ import {
 } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { createSong } from "./graphql/mutations";
+import imageCompression from "browser-image-compression";
 const client = generateClient();
 export default function SongCreateForm(props) {
   const {
@@ -61,6 +62,21 @@ export default function SongCreateForm(props) {
     }
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
+  };
+  const customProcessFile = async ({ file, key }) => {
+    const options = {
+      maxSizeMB: 1, // Maximum file size in MB
+      maxWidthOrHeight: 300, // Maximum width or height
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(file, options);
+      const finalFile = await processFile({ file: compressedFile, key: key });
+      return finalFile;
+    } catch (error) {
+      console.error("Image compression error:", error);
+      return file; // Fallback to the original file in case of an error
+    }
   };
   return (
     <Grid
@@ -160,7 +176,7 @@ export default function SongCreateForm(props) {
         maxFileCount={1}
         path="image/"
         acceptedFileTypes={["image/*"]}
-        processFile={processFile}
+        processFile={customProcessFile}
         onUploadSuccess={({ key }) => {
           setCoverArtUrl(key);
         }}
