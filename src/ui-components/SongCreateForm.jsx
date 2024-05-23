@@ -2,6 +2,7 @@
 "use client";
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import { StorageManager } from "@aws-amplify/ui-react-storage";
 import {
   fetchByPath,
   getOverrideProps,
