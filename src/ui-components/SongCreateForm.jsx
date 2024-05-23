@@ -128,7 +128,7 @@ export default function SongCreateForm(props) {
       {...rest}
     >
       <TextField
-        label="Title"
+        label="Song Title"
         isRequired={true}
         isReadOnly={false}
         value={title}
@@ -154,6 +154,9 @@ export default function SongCreateForm(props) {
         {...getOverrideProps(overrides, "title")}
       ></TextField>
       <StorageManager
+        displayText={{
+          dropFilesText: "Drop Cover Art File Here",
+        }}
         maxFileCount={1}
         path="image/"
         acceptedFileTypes={["image/*"]}
@@ -166,6 +169,9 @@ export default function SongCreateForm(props) {
         }}
       />
       <StorageManager
+        displayText={{
+          dropFilesText: "Drop Song File Here",
+        }}
         maxFileCount={1}
         path="audio/"
         acceptedFileTypes={["audio/*"]}

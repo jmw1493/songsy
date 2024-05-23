@@ -1,18 +1,42 @@
-body {
+* {
   margin: 0;
-  background: linear-gradient(180deg, rgb(117, 81, 194), rgb(255, 255, 255));
-  display: flex;
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  padding: 0;
+}
+
+body {
   height: 100vh;
   width: 100vw;
+  color: white;
+  background: black;
+  /* background: linear-gradient(180deg, rgb(117, 81, 194), rgb(255, 255, 255)); */
+  /* display: flex; */
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   justify-content: center;
   align-items: center;
+}
+
+header {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 main {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  font-size: 30px;
+  background: linear-gradient(90deg, #ff00d4, #7443bd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 button {
@@ -62,4 +86,8 @@ li:hover {
 a {
   font-weight: 800;
   text-decoration: none;
+}
+
+audio {
+  height: 35px;
 }
