@@ -21,7 +21,13 @@ x - 3. design db and s3 structure
       - # user can have many likes
       - # songs can have many likes
 x - 4. make upload song (profile page) (only thing on the page right now)
-5. make retrieve song and cover art (explore page) (only one song on explore page right now)
-6. fill out explore page
-7. fill out profile page and login pages
-8. add ability to like songs, which save to your profile to listen later
+x - 5. make retrieve song and cover art (explore page) (only one song on explore page right now)
+6. songs are playable in explore page
+7. fill out explore page - using functions
+  a. get basic function working
+  b. get basic db query in function working
+  c. make the pulled songs random and receive specific number of results as input
+    * ensure passing in larger number than amount in db won't cause error
+8. fill out profile page and login pages
+9. function to compress images
+10. add ability to like songs, which save to your profile to listen later

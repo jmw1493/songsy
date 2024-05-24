@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { StorageImage } from "@aws-amplify/ui-react-storage";
 import { AuthUser } from "aws-amplify/auth";
+import { getUrl } from "aws-amplify/storage";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import type { Schema } from "../amplify/data/resource";
@@ -16,6 +17,13 @@ type ExplorePageProps = {
 function ExplorePage({ user }: ExplorePageProps) {
   const [sliderValue, setSliderValue] = useState(0);
   const [songs, setSongs] = useState<Array<Schema["Song"]["type"]>>([]);
+
+  let audio = new Audio();
+
+  function setSongPlayingUrl(url: string) {
+    audio = new Audio(url);
+    audio.play();
+  }
 
   useEffect(() => {
     client.models.Song.observeQuery({
@@ -58,6 +66,32 @@ function ExplorePage({ user }: ExplorePageProps) {
     return numOfHorizontalImages * numOfVerticalImages;
   }
 
+  async function playAudio(song: Schema["Song"]["type"]) {
+    try {
+      const newUrl = await getLinkToStorageFile(song.songUrl);
+      setSongPlayingUrl(newUrl);
+    } catch (error) {
+      console.error("Error getting URL from S3 for song", song.title, error);
+    }
+  }
+
+  async function getLinkToStorageFile(filePath: string): Promise<string> {
+    try {
+      const url = await getUrl({
+        path: filePath,
+        options: {
+          validateObjectExistence: false, // defaults to false
+          expiresIn: 20, // validity of the URL, in seconds. defaults to 900 (15 minutes) and maxes at 3600 (1 hour)
+          // useAccelerateEndpoint: true, // Whether to use accelerate endpoint.
+        },
+      });
+      return url.url.toString();
+    } catch (e) {
+      console.error("Error getting URL from S3:", e);
+      throw new Error("Could not get URL from S3");
+    }
+  }
+
   return (
     <div>
       <section className="slider-container">
@@ -83,7 +117,12 @@ function ExplorePage({ user }: ExplorePageProps) {
                 height: size,
                 objectFit: "cover",
               }}
-              // className="image"
+              onMouseOver={() => {
+                playAudio(song);
+              }}
+              onMouseLeave={() => {
+                audio.pause();
+              }}
             />
           );
         })}
