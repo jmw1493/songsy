@@ -10,7 +10,14 @@ const schema = a.schema({
       songUrl: a.string().required(),
       coverArtUrl: a.string().required(),
     })
-    .authorization((allow) => [allow.owner()]), //.authenticated()
+    .authorization((allow) => [
+      allow.authenticated().to(["read"]),
+      // Allow anyone auth'd with an API key to read everyone's posts.
+      // allow.publicApiKey().to(["read"]),
+      // Allow signed-in user to create, read, update,
+      // and delete their __OWN__ posts.
+      allow.owner(),
+    ]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -18,7 +25,7 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: "userPool", //userPoolapiKey
+    defaultAuthorizationMode: "userPool", // Authenticated users upload songs
     // API Key is used for a.allow.public() rules
     apiKeyAuthorizationMode: {
       expiresInDays: 30,

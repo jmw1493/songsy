@@ -1,10 +1,15 @@
 import { SongCreateForm } from "./ui-components";
+import { AuthUser } from "aws-amplify/auth";
 import "@aws-amplify/ui-react/styles.css";
 import "./App.css";
 import MySongs from "./MySongs";
 import { useState } from "react";
 
-function ProfilePage() {
+type ProfilePageProps = {
+  user: AuthUser | undefined;
+};
+
+function ProfilePage({ user }: ProfilePageProps) {
   const [page, setPage] = useState("upload-song");
   return (
     <div>
@@ -24,7 +29,7 @@ function ProfilePage() {
           <SongCreateForm />
         </div>
       ) : (
-        <MySongs />
+        <MySongs user={user} />
       )}
     </div>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { StorageImage } from "@aws-amplify/ui-react-storage";
+import { AuthUser } from "aws-amplify/auth";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import type { Schema } from "../amplify/data/resource";
@@ -8,12 +9,22 @@ import "./ExplorePage.css";
 
 const client = generateClient<Schema>();
 
-function ExplorePage() {
+type ExplorePageProps = {
+  user: AuthUser | undefined;
+};
+
+function ExplorePage({ user }: ExplorePageProps) {
   const [sliderValue, setSliderValue] = useState(0);
   const [songs, setSongs] = useState<Array<Schema["Song"]["type"]>>([]);
 
   useEffect(() => {
-    client.models.Song.observeQuery().subscribe({
+    client.models.Song.observeQuery({
+      filter: {
+        owner: {
+          notContains: user?.userId,
+        },
+      },
+    }).subscribe({
       next: (data) => setSongs([...data.items]),
     });
   }, []);

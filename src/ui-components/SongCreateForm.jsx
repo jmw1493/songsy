@@ -1,4 +1,3 @@
-/* eslint-disable */
 "use client";
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
@@ -135,6 +134,7 @@ export default function SongCreateForm(props) {
           }
           setSubmissionMessage("Song submitted successfully!");
         } catch (err) {
+          console.dir(err);
           if (onError) {
             const messages = err.errors.map((e) => e.message).join("\n");
             onError(modelFields, messages);
@@ -182,10 +182,9 @@ export default function SongCreateForm(props) {
         onUploadSuccess={({ key }) => {
           setCoverArtUrl(key);
         }}
-        onFileRemove={({ key }) => {
+        onFileRemove={() => {
           setCoverArtUrl(undefined);
         }}
-        clearOnSuccess
       />
       <StorageManager
         displayText={{
@@ -198,10 +197,9 @@ export default function SongCreateForm(props) {
         onUploadSuccess={({ key }) => {
           setSongUrl(key);
         }}
-        onFileRemove={({ key }) => {
+        onFileRemove={() => {
           setSongUrl(undefined);
         }}
-        clearOnSuccess
       />
       <Flex
         justifyContent="space-between"
@@ -216,6 +214,7 @@ export default function SongCreateForm(props) {
           }}
           {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
+        <p>{submissionMessage}</p>
         <Flex
           gap="15px"
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}

@@ -9,7 +9,7 @@ function App() {
   const [page, setPage] = useState("profile");
   return (
     <Authenticator>
-      {({ signOut }) => (
+      {({ signOut, user }) => (
         <div>
           <header>
             <span className="logo">Songzy</span>
@@ -24,7 +24,13 @@ function App() {
               <button onClick={signOut}>Sign out</button>
             </div>
           </header>
-          <main>{page === "profile" ? <ProfilePage /> : <ExplorePage />}</main>
+          <main>
+            {page === "profile" ? (
+              <ProfilePage user={user} />
+            ) : (
+              <ExplorePage user={user} />
+            )}
+          </main>
         </div>
       )}
     </Authenticator>
