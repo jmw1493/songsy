@@ -17,6 +17,10 @@ type ExplorePageProps = {
 function ExplorePage({ user }: ExplorePageProps) {
   const [sliderValue, setSliderValue] = useState(0);
   const [songs, setSongs] = useState<Array<Schema["Song"]["type"]>>([]);
+  const [oldNextToken, setOldNextToken] = useState<string | null | undefined>(
+    undefined
+  );
+  const [numOfImagesToDisplay, setNumOfImagesToDisplay] = useState(0);
 
   let audio = new Audio();
 
@@ -26,23 +30,34 @@ function ExplorePage({ user }: ExplorePageProps) {
   }
 
   useEffect(() => {
-    client.models.Song.observeQuery({
-      filter: {
-        owner: {
-          notContains: user?.userId,
-        },
-      },
-    }).subscribe({
-      next: (data) => setSongs([...data.items]),
-    });
-  }, []);
-
-  useEffect(() => {
-    // fetch more songs based on slider value
-    console.log("getNumOfImagesToDisplay", getNumOfImagesToDisplay());
+    fetchNewSongs();
   }, [sliderValue]);
 
-  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+  async function fetchNewSongs() {
+    const newNumOfImagesToDisplay = getNumOfImagesToDisplay();
+    if (
+      oldNextToken !== null &&
+      newNumOfImagesToDisplay > numOfImagesToDisplay
+    ) {
+      const {
+        data: newSongs,
+        nextToken, // Repeat this API call with the nextToken until the returned nextToken is `null`
+      } = await client.models.Song.list({
+        filter: {
+          owner: {
+            notContains: user?.userId,
+          },
+        },
+        limit: newNumOfImagesToDisplay - numOfImagesToDisplay, // default value is 100
+        nextToken: oldNextToken, // previous nextToken
+      });
+      setOldNextToken(nextToken);
+      setNumOfImagesToDisplay(newNumOfImagesToDisplay);
+      setSongs(songs.concat(newSongs));
+    }
+  }
+
+  const handleSliderChange = (_: Event, newValue: number | number[]) => {
     setSliderValue(newValue as number);
   };
 
@@ -59,11 +74,15 @@ function ExplorePage({ user }: ExplorePageProps) {
     const gap = getGap();
     const imgSize = imgPx + gap;
     const padding = 40;
-    const numOfHorizontalImages =
-      Math.round(window.innerWidth - padding) / imgSize;
-    const numOfVerticalImages =
-      Math.round(window.innerHeight - padding) / imgSize;
-    return numOfHorizontalImages * numOfVerticalImages;
+    const numOfHorizontalImages = Math.round(
+      (window.innerWidth - padding) / imgSize
+    );
+    const numOfVerticalImages = Math.round(
+      (window.innerHeight - padding) / imgSize
+    );
+    return (
+      numOfHorizontalImages * numOfVerticalImages + numOfHorizontalImages + 1
+    );
   }
 
   async function playAudio(song: Schema["Song"]["type"]) {

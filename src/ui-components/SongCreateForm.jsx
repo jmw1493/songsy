@@ -118,6 +118,7 @@ export default function SongCreateForm(props) {
               modelFields[key] = null;
             }
           });
+          // for (let i = 0; i < 100; i++) {
           await client.graphql({
             query: createSong.replaceAll("__typename", ""),
             variables: {
@@ -126,6 +127,7 @@ export default function SongCreateForm(props) {
               },
             },
           });
+          // }
           if (onSuccess) {
             onSuccess(modelFields);
           }
