@@ -10,6 +10,7 @@
   /* display: grid; */
   /* grid-template-columns: repeat(auto-fill); */
   gap: 16px;
+  position: relative;
 }
 
 .song-item {

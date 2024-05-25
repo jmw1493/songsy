@@ -24,10 +24,13 @@ x - 4. make upload song (profile page) (only thing on the page right now)
 x - 5. make retrieve song and cover art (explore page) (only one song on explore page right now)
 x - 6. songs are playable in explore page
 x - 7. fill out explore page 
-8. figure out how to compress images (function?)
-9. make pages look good
-10. add ability to like songs, which save to your profile to listen later
-11. use functions for something
+8. audio player to work perfectly on explore page
+9. song popup on explore page
+10. can like songs
+11. improve home page to have side nav - upload song, my songs, my likes, explore
+12. figure out how to compress images (function?)
+
+... use functions for something
 - compress images
 - explore page get random songs
   a. get basic function working

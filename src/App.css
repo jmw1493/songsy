@@ -14,7 +14,8 @@
   font-size: 18px;
 }
 
-.song-container .right {
+/* .song-container */
+.right {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -46,4 +47,8 @@
 
 .amplify-button {
   color: rgb(203, 203, 203);
+}
+
+.overlay {
+  background: rgba(62, 62, 62, 0.2);
 }

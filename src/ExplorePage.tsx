@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StorageImage } from "@aws-amplify/ui-react-storage";
 import { AuthUser } from "aws-amplify/auth";
-import { getUrl } from "aws-amplify/storage";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import "./ExplorePage.css";
+import SongModal from "./SongModal";
 
 const client = generateClient<Schema>();
 
@@ -21,13 +21,11 @@ function ExplorePage({ user }: ExplorePageProps) {
     undefined
   );
   const [numOfImagesToDisplay, setNumOfImagesToDisplay] = useState(0);
-
-  let audio = new Audio();
-
-  function setSongPlayingUrl(url: string) {
-    audio = new Audio(url);
-    audio.play();
-  }
+  const [currentSong, setCurrentSong] = useState<Schema["Song"]["type"] | null>(
+    null
+  );
+  const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetchNewSongs();
@@ -85,34 +83,31 @@ function ExplorePage({ user }: ExplorePageProps) {
     );
   }
 
-  async function playAudio(song: Schema["Song"]["type"]) {
-    try {
-      const newUrl = await getLinkToStorageFile(song.songUrl);
-      setSongPlayingUrl(newUrl);
-    } catch (error) {
-      console.error("Error getting URL from S3 for song", song.title, error);
-    }
-  }
+  function handleSongHover(
+    song: Schema["Song"]["type"],
+    event: React.MouseEvent<HTMLImageElement>
+  ) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const gridRect = gridRef.current?.getBoundingClientRect();
 
-  async function getLinkToStorageFile(filePath: string): Promise<string> {
-    try {
-      const url = await getUrl({
-        path: filePath,
-        options: {
-          validateObjectExistence: false, // defaults to false
-          expiresIn: 20, // validity of the URL, in seconds. defaults to 900 (15 minutes) and maxes at 3600 (1 hour)
-          // useAccelerateEndpoint: true, // Whether to use accelerate endpoint.
-        },
-      });
-      return url.url.toString();
-    } catch (e) {
-      console.error("Error getting URL from S3:", e);
-      throw new Error("Could not get URL from S3");
+    // Calculate modal position
+    let top = rect.top + window.scrollY;
+    let left = rect.right + window.scrollX + 10;
+
+    // Adjust position if the song is near the edge
+    if (gridRect && left + 200 > gridRect.right) {
+      left = rect.left + window.scrollX - 210; // Adjust left position
     }
+    if (gridRect && top + 150 > gridRect.bottom) {
+      top = rect.bottom + window.scrollY - 160; // Adjust top position
+    }
+
+    setModalPosition({ top, left });
+    setCurrentSong(song);
   }
 
   return (
-    <div>
+    <div className={currentSong ? "overlay" : ""}>
       <section className="slider-container">
         <Box sx={{ width: 200 }}>
           <Slider value={sliderValue} onChange={handleSliderChange} />
@@ -120,10 +115,14 @@ function ExplorePage({ user }: ExplorePageProps) {
       </section>
       <div
         className="songs-grid"
+        ref={gridRef}
         style={{
           gap: getGap(),
         }}
       >
+        {currentSong && (
+          <SongModal song={currentSong} position={modalPosition} />
+        )}
         {songs.map((song) => {
           const size = getImgPx();
           return (
@@ -136,28 +135,13 @@ function ExplorePage({ user }: ExplorePageProps) {
                 height: size,
                 objectFit: "cover",
               }}
-              onMouseOver={() => {
-                playAudio(song);
-              }}
+              onMouseOver={(e) => handleSongHover(song, e)}
               onMouseLeave={() => {
-                audio.pause();
+                setCurrentSong(null);
               }}
             />
           );
         })}
-        {/* <div key={song.id} className="song-container">
-          <StorageImage alt="" path={song.coverArtUrl} className="image" />
-          <div className="right">
-            <p className="title">{song.title}</p>
-            {audioUrls[song.id] ? (
-              <audio controls src={audioUrls[song.id]}>
-                Your browser does not support the audio element.
-              </audio>
-            ) : (
-              <p>Loading audio for {song.title}...</p>
-            )}
-          </div>
-        </div> */}
       </div>
     </div>
   );
