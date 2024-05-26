@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
-    "aws-sdk": "^2.1628.0"
+    "aws-sdk": "^2.1628.0",
+    "sharp": "^0.33.4"
   }
 }

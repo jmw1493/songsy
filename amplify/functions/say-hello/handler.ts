@@ -1,5 +1,6 @@
 import { S3Handler } from "aws-lambda";
 import AWS from "aws-sdk";
+import sharp from "sharp";
 
 const s3 = new AWS.S3();
 const bucketName = process.env.SONGZY_FILES_BUCKET_NAME ?? "";
@@ -33,9 +34,27 @@ export const handler: S3Handler = async (event) => {
       const s3Object = await s3
         .getObject({ Bucket: bucketName, Key: key })
         .promise();
-      console.log("s3Object", s3Object);
+      const imageBuffer = s3Object.Body as Buffer;
+      // Compress the image
+      const compressedImageBuffer = await sharp(imageBuffer)
+        .resize({ width: 800 }) // Resize to 800px width, change as needed
+        .jpeg({ quality: 80 }) // Adjust JPEG quality, change as needed
+        .toBuffer();
+      console.log(compressedImageBuffer);
+
+      // Upload the compressed image back to S3
+      await s3
+        .putObject({
+          Bucket: bucketName,
+          Key: key,
+          Body: compressedImageBuffer,
+          ContentType: s3Object.ContentType,
+        })
+        .promise();
+
+      console.log(`Successfully compressed and uploaded image ${key}`);
     } catch (e) {
-      console.error(e);
+      console.error(`Failed to process image ${key}:`, e);
     }
   }
 };
