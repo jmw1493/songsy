@@ -31,24 +31,26 @@ x - 11. figure out how to compress images (function?)
 x - 12. my songs come in by created date
 
 UI
-x - 13. songmodal positions on top when screen size isn't big enough for song modal and one photo at current imgPx()
-14. everything (esp explore page) works and looks good on mobile
+x - 13. everything (esp explore page) works and looks good on mobile
+14. songmodal positions on top when screen size isn't big enough for song modal to go off to side
+  - maybe determine if it's best to put modal left, right, up, and/or down, and how much to that/those directions (maybe for small screen you offset the modal 50% in the x direction)
 15. better submit song UI
 16. better loading ui
-17. routing
+17. better login screen
 18. images are compressing and loading properly
+19. routing
 
 Artist name
-19. user can create their artist name
-20. author (username) of song appears in songmodal
+20. user can create their artist name
+21. author (username) of song appears in songmodal
 
 Song likes
-21. can like songs - user creates like, read all liked songs for user, user delete like
+22. can like songs - user creates like, read all liked songs for user, user delete like
 
 Extra
-22. explore page - load more when screen size changes
-23. explore page - load more when scroll to bottom
-24. explore page - songs are in order of most recently created
+23. explore page - load more when screen size changes
+24. explore page - load more when scroll to bottom
+25. explore page - songs are in order of most recently created
   - maybe show the songs you've made?
 
 
