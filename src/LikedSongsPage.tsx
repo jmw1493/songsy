@@ -1,5 +1,5 @@
 function LikedSongsPage() {
-  return <div>liked songs page</div>;
+  return <h2>Liked Songs</h2>;
 }
 
 export default LikedSongsPage;

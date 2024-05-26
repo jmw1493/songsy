@@ -32,13 +32,14 @@ x - 10. improve home page to have side nav - upload song, my songs, my likes, ex
 13. author (username) of song appears in songmodal
 14. figure out how to compress images (function?)
 15. songmodal positions on top when screen size isn't big enough for song modal and one photo at current imgPx()
-16. explore page works on mobile
+16. my songs come in by created date
 17. better loading ui
 18. better submit song UI
-19. routing
-20. explore page - load more when screen size changes
-21. explore page - load more when scroll to bottom
-22. explore page - songs are in order of most recently created
+19. everything (esp explore page) works on mobile
+20. routing
+21. explore page - load more when screen size changes
+22. explore page - load more when scroll to bottom
+23. explore page - songs are in order of most recently created
   - maybe show the songs you've made?
 
 
