@@ -11,10 +11,41 @@ type SongModalProps = {
 
 function SongModal({ song, position }: SongModalProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const isMountedRef = useRef(true);
 
   useEffect(() => {
+    isMountedRef.current = true;
+
+    async function playAudio() {
+      if (song && audioRef.current) {
+        try {
+          const newUrl = await getLinkToStorageFile(song.songUrl);
+          if (isMountedRef.current && audioRef.current) {
+            audioRef.current.src = newUrl;
+            audioRef.current.load();
+            audioRef.current.play().catch(() => {
+              // ignore errors
+            });
+          }
+        } catch (error) {
+          console.error(
+            "Error getting URL from S3 for song",
+            song.title,
+            error
+          );
+        }
+      }
+    }
+
     playAudio();
-  }, [song]);
+
+    return () => {
+      isMountedRef.current = false;
+      if (audioRef.current) {
+        audioRef.current = null;
+      }
+    };
+  });
 
   async function getLinkToStorageFile(filePath: string): Promise<string> {
     try {
@@ -33,19 +64,6 @@ function SongModal({ song, position }: SongModalProps) {
     }
   }
 
-  async function playAudio() {
-    audioRef?.current?.pause();
-    if (song && audioRef.current) {
-      try {
-        const newUrl = await getLinkToStorageFile(song.songUrl);
-        audioRef.current.src = newUrl;
-        // audioRef.current.play();
-      } catch (error) {
-        console.error("Error getting URL from S3 for song", song.title, error);
-      }
-    }
-  }
-
   if (!song) return null;
 
   return (
@@ -57,7 +75,7 @@ function SongModal({ song, position }: SongModalProps) {
         <StorageImage alt="" path={song.coverArtUrl} />
       </div>
       <div className="right">
-        <h3>{song.title}</h3>
+        <b>{song.title}</b>
         <audio ref={audioRef} controls />
       </div>
     </div>
