@@ -85,23 +85,28 @@ function ExplorePage({ user }: ExplorePageProps) {
 
   function handleSongHover(
     song: Schema["Song"]["type"],
-    event: React.MouseEvent<HTMLImageElement>
+    event: React.MouseEvent<HTMLDivElement>
   ) {
+    // console.log("event.currentTarget", event.currentTarget);
     const rect = event.currentTarget.getBoundingClientRect();
     const gridRect = gridRef.current?.getBoundingClientRect();
 
-    // Calculate modal position
-    let top = rect.top + window.scrollY;
-    let left = rect.right + window.scrollX + 10;
+    const gridRectTop = gridRect?.top || 0;
+    const gridRectLeft = gridRect?.left || 0;
+
+    let top = rect.top + -gridRectTop;
+    let left = rect.right + -gridRectLeft;
 
     // Adjust position if the song is near the edge
-    if (gridRect && left + 200 > gridRect.right) {
-      left = rect.left + window.scrollX - 210; // Adjust left position
+    const widthOfModal = 340;
+    const heightOfModal = 170;
+    if (gridRect && left + widthOfModal > gridRect.right) {
+      left = rect.left + window.scrollX - gridRectLeft - widthOfModal; // Adjust left position
     }
-    if (gridRect && top + 150 > gridRect.bottom) {
-      top = rect.bottom + window.scrollY - 160; // Adjust top position
+    if (gridRect && top + heightOfModal > window.innerHeight) {
+      top = top - heightOfModal; // Adjust top position
     }
-
+    // console.log("final modal position", { top, left });
     setModalPosition({ top, left });
     setCurrentSong(song);
   }
@@ -120,26 +125,29 @@ function ExplorePage({ user }: ExplorePageProps) {
           gap: getGap(),
         }}
       >
-        {currentSong && (
-          <SongModal song={currentSong} position={modalPosition} />
-        )}
         {songs.map((song) => {
           const size = getImgPx();
           return (
-            <StorageImage
+            <div
               key={song.id}
-              alt=""
-              path={song.coverArtUrl}
-              style={{
-                width: size,
-                height: size,
-                objectFit: "cover",
-              }}
               onMouseOver={(e) => handleSongHover(song, e)}
               onMouseLeave={() => {
                 setCurrentSong(null);
               }}
-            />
+            >
+              {currentSong && currentSong.id === song.id && (
+                <SongModal song={currentSong} position={modalPosition} />
+              )}
+              <StorageImage
+                alt=""
+                path={song.coverArtUrl}
+                style={{
+                  width: size,
+                  height: size,
+                  objectFit: "cover",
+                }}
+              />
+            </div>
           );
         })}
       </div>

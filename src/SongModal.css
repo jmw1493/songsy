@@ -1,20 +1,29 @@
 .song-modal {
   position: absolute;
-  min-width: 200px;
   background: black;
-  border: 1px solid black;
+  border: 1px solid white;
   border-radius: 20px;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.image-container {
+  height: 150px;
+  width: 150px;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .song-modal img {
-  height: 150px;
-  width: 150px;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
 }
 
 .song-modal audio {
-  width: 100%;
+  width: 150px;
 }

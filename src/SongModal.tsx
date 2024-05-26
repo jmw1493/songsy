@@ -53,7 +53,9 @@ function SongModal({ song, position }: SongModalProps) {
       className="song-modal"
       style={{ top: position.top, left: position.left }}
     >
-      <StorageImage alt="" path={song.coverArtUrl} />
+      <div className="image-container">
+        <StorageImage alt="" path={song.coverArtUrl} />
+      </div>
       <div className="right">
         <h3>{song.title}</h3>
         <audio ref={audioRef} controls />
