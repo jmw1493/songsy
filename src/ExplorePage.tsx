@@ -136,7 +136,11 @@ function ExplorePage({ user }: ExplorePageProps) {
               }}
             >
               {currentSong && currentSong.id === song.id && (
-                <SongModal song={currentSong} position={modalPosition} />
+                <SongModal
+                  song={currentSong}
+                  position={modalPosition}
+                  userId={user?.userId}
+                />
               )}
               <StorageImage
                 alt=""

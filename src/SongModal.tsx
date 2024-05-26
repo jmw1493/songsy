@@ -1,15 +1,23 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getUrl } from "aws-amplify/storage";
 import { StorageImage } from "@aws-amplify/ui-react-storage";
 import type { Schema } from "../amplify/data/resource";
+import { generateClient } from "aws-amplify/api";
+import { createLike, deleteLike } from "./ui-components/graphql/mutations";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import "./SongModal.css";
+
+const client = generateClient();
 
 type SongModalProps = {
   song: Schema["Song"]["type"];
   position: { top: number; left: number };
+  userId: string | undefined;
 };
 
-function SongModal({ song, position }: SongModalProps) {
+function SongModal({ song, position, userId }: SongModalProps) {
+  const [favorited, setFavorited] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isMountedRef = useRef(true);
 
@@ -47,6 +55,14 @@ function SongModal({ song, position }: SongModalProps) {
     };
   });
 
+  useEffect(() => {
+    async function checkAlreadyFavorited() {
+      const favoritedAlready = false; // replace with query
+      setFavorited(favoritedAlready);
+    }
+    checkAlreadyFavorited();
+  });
+
   async function getLinkToStorageFile(filePath: string): Promise<string> {
     try {
       const url = await getUrl({
@@ -64,6 +80,34 @@ function SongModal({ song, position }: SongModalProps) {
     }
   }
 
+  async function likeSong() {
+    try {
+      const input = { songId: song.id, userId: userId };
+      await client.graphql({
+        query: createLike,
+        variables: {
+          input,
+        },
+      });
+    } catch (e) {
+      console.error("Error liking song: ", e);
+    }
+  }
+
+  async function unlikeSong() {
+    try {
+      const input = { songId: song.id, userId: userId };
+      await client.graphql({
+        query: deleteLike,
+        variables: {
+          input,
+        },
+      });
+    } catch (e) {
+      console.error("Error liking song: ", e);
+    }
+  }
+
   if (!song) return null;
 
   return (
@@ -75,6 +119,11 @@ function SongModal({ song, position }: SongModalProps) {
         <StorageImage alt="" path={song.coverArtUrl} />
       </div>
       <div className="right">
+        {favorited ? (
+          <FavoriteIcon onClick={unlikeSong} />
+        ) : (
+          <FavoriteBorderIcon onClick={likeSong} />
+        )}
         <b>{song.title}</b>
         <audio ref={audioRef} controls />
       </div>

@@ -18,6 +18,16 @@ const schema = a.schema({
       // and delete their __OWN__ posts.
       allow.owner(),
     ]),
+
+  Like: a
+    .model({
+      songId: a.string().required(),
+      userId: a.string().required(),
+    })
+    .authorization((allow) => [
+      allow.authenticated().to(["create", "read"]),
+      allow.owner().to(["update", "delete"]),
+    ]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

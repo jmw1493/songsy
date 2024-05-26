@@ -53,3 +53,38 @@ export const updateSong = /* GraphQL */ `
     }
   }
 `;
+
+export const createLike = `
+  mutation CreateLike($input: CreateLikeInput!) {
+    createLike(input: $input) {
+      id
+      songId
+      userId
+    }
+  }
+`;
+
+export const deleteLike = `
+  mutation DeleteLike($input: DeleteLikeInput!) {
+    deleteLike(input: $input) {
+      id
+    }
+  }
+`;
+
+export const listLikesWithSongs = `
+  query ListLikesWithSongs($filter: ModelLikeFilterInput) {
+    listLikes(filter: $filter) {
+      items {
+        id
+        song {
+          id
+          title
+          songUrl
+          coverArtUrl
+          userId
+        }
+      }
+    }
+  }
+`;
