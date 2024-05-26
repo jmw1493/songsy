@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import { AuthUser } from "aws-amplify/auth";
@@ -9,21 +9,27 @@ import MySongs from "./MySongs";
 import LikedSongsPage from "./LikedSongsPage";
 import "./App.css";
 import AccountPage from "./AccountPage";
-
-enum Pages {
-  UploadSong = "Upload Song",
-  MySongs = "My Songs",
-  LikedSongs = "Liked Songs",
-  Explore = "Explore",
-  Account = "Account",
-}
+import Nav from "./Nav";
+import { Pages } from "./constants";
 
 function App() {
   const [page, setPage] = useState(Pages.UploadSong);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup listener on unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const uploadSongPage = (
     <div>
-      <h2>Upload song</h2>
+      <h1>Upload Song</h1>
       <SongCreateForm />
     </div>
   );
@@ -52,34 +58,18 @@ function App() {
   return (
     <Authenticator>
       {({ user, signOut }) => (
-        <div>
-          <header>
+        <div style={{ height: "100%" }}>
+          {/* <header>
             <span className="logo">Songzy</span>
-          </header>
-          <div style={{ display: "flex", alignItems: "stretch" }}>
-            <nav
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-                marginTop: "40px",
-              }}
-            >
-              {Object.values(Pages).map((pageName) => (
-                <button
-                  key={pageName}
-                  className={page === pageName ? "selected" : ""}
-                  onClick={() => {
-                    ``;
-                    if (page !== pageName) {
-                      setPage(pageName);
-                    }
-                  }}
-                >
-                  {pageName}
-                </button>
-              ))}
-            </nav>
+          </header> */}
+          <div
+            style={
+              isMobile
+                ? { height: "100%" }
+                : { display: "flex", alignItems: "stretch", height: "100%" }
+            }
+          >
+            <Nav page={page} setPage={setPage} isMobile={isMobile} />
             <main>{renderComponent(user, signOut)}</main>
           </div>
         </div>

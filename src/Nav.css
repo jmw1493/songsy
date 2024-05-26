@@ -1,0 +1,28 @@
+.mobile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hamburger-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 0.5rem;
+}
+
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: 8px;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 1;
+}
+
+.hamburger-menu button {
+  opacity: 1;
+}
