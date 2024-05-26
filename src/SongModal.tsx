@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { getUrl } from "aws-amplify/storage";
 import { StorageImage } from "@aws-amplify/ui-react-storage";
 import type { Schema } from "../amplify/data/resource";
-import { generateClient } from "aws-amplify/api";
-import { createLike, deleteLike } from "./ui-components/graphql/mutations";
+// import { generateClient } from "aws-amplify/api";
+// import { createLike, deleteLike } from "./ui-components/graphql/mutations";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import "./SongModal.css";
 
-const client = generateClient();
+// const client = generateClient();
 
 type SongModalProps = {
   song: Schema["Song"]["type"];
@@ -16,7 +16,7 @@ type SongModalProps = {
   userId: string | undefined;
 };
 
-function SongModal({ song, position, userId }: SongModalProps) {
+function SongModal({ song, position }: SongModalProps) {
   const [favorited, setFavorited] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isMountedRef = useRef(true);
@@ -82,13 +82,13 @@ function SongModal({ song, position, userId }: SongModalProps) {
 
   async function likeSong() {
     try {
-      const input = { songId: song.id, userId: userId };
-      await client.graphql({
-        query: createLike,
-        variables: {
-          input,
-        },
-      });
+      // const input = { songId: song.id, userId: userId };
+      // await client.graphql({
+      //   query: createLike,
+      //   variables: {
+      //     input,
+      //   },
+      // });
     } catch (e) {
       console.error("Error liking song: ", e);
     }
@@ -96,13 +96,13 @@ function SongModal({ song, position, userId }: SongModalProps) {
 
   async function unlikeSong() {
     try {
-      const input = { songId: song.id, userId: userId };
-      await client.graphql({
-        query: deleteLike,
-        variables: {
-          input,
-        },
-      });
+      // const input = { songId: song.id, userId: userId };
+      // await client.graphql({
+      //   query: deleteLike,
+      //   variables: {
+      //     input,
+      //   },
+      // });
     } catch (e) {
       console.error("Error liking song: ", e);
     }
