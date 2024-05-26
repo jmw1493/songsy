@@ -59,9 +59,6 @@ function App() {
     <Authenticator>
       {({ user, signOut }) => (
         <div style={{ height: "100%" }}>
-          {/* <header>
-            <span className="logo">Songzy</span>
-          </header> */}
           <div
             style={
               isMobile

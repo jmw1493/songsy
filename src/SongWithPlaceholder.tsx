@@ -56,7 +56,7 @@ function SongWithPlaceholder({ song }: ExpectedProps) {
       {/* {imageIsLoading ? (
         <div className="image-placeholder">image placeholder</div>
       ) : ( */}
-      <LazyLoad height={200} offset={100}>
+      <LazyLoad height={200} offset={100} className="image-container">
         <StorageImage
           alt=""
           path={song.coverArtUrl}

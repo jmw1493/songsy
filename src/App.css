@@ -3,6 +3,12 @@
   margin-bottom: 15px;
 }
 
+.song-container .image-container {
+  width: 150px;
+  height: 150px;
+  margin-right: 15px;
+}
+
 .song-container .image {
   width: 150px;
   height: 150px;

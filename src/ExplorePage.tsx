@@ -67,6 +67,18 @@ function ExplorePage({ user }: ExplorePageProps) {
     return 16 - (sliderValue / 100) * 15;
   }
 
+  function oneImagePerRow(): boolean {
+    const imgPx = getImgPx();
+    const gap = getGap();
+    const imgSize = imgPx + gap;
+    const padding = 40;
+    const numOfHorizontalImages = Math.round(
+      (window.innerWidth - padding) / imgSize
+    );
+    console.log(numOfHorizontalImages);
+    return numOfHorizontalImages === 1;
+  }
+
   function getNumOfImagesToDisplay(): number {
     const imgPx = getImgPx();
     const gap = getGap();
@@ -94,19 +106,23 @@ function ExplorePage({ user }: ExplorePageProps) {
     const gridRectTop = gridRect?.top || 0;
     const gridRectLeft = gridRect?.left || 0;
 
-    let top = rect.top + -gridRectTop;
-    let left = rect.right + -gridRectLeft;
+    let top = rect.top - gridRectTop;
+    let left = rect.right - gridRectLeft;
 
-    // Adjust position if the song is near the edge
-    const widthOfModal = 340;
-    const heightOfModal = 170;
-    if (gridRect && left + widthOfModal > gridRect.right) {
-      left = rect.left + window.scrollX - gridRectLeft - widthOfModal; // Adjust left position
+    if (oneImagePerRow()) {
+      left = gridRectLeft;
+    } else {
+      // Adjust position if the song is near the edge
+      const widthOfModal = 340;
+      const heightOfModal = 170;
+      if (gridRect && left + widthOfModal > gridRect.right) {
+        left = rect.left + window.scrollX - gridRectLeft - widthOfModal; // Adjust left position
+      }
+      if (gridRect && top + heightOfModal > window.innerHeight) {
+        top = top - heightOfModal; // Adjust top position
+      }
     }
-    if (gridRect && top + heightOfModal > window.innerHeight) {
-      top = top - heightOfModal; // Adjust top position
-    }
-    // console.log("final modal position", { top, left });
+
     setModalPosition({ top, left });
     setCurrentSong(song);
   }

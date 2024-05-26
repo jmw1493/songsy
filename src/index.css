@@ -25,20 +25,10 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  /* padding-top: 0; */
   text-align: center;
-}
-
-.logo {
-  font-size: 30px;
-  background: linear-gradient(90deg, #ff00d4, #7443bd);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 button {

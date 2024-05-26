@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Pages } from "./constants";
+// import logo from "./assets/logo.webp";
 import "./Nav.css";
 
 function Nav({
@@ -35,6 +36,10 @@ function Nav({
   return isMobile ? (
     <header className="mobile-header">
       <div className="logo">Songzy</div>
+      {/* <div className="logo-img">
+        <img src={logo} alt="" />
+      </div> */}
+
       <div className="hamburger-container" ref={menuRef}>
         <button onClick={toggleMenu} style={{ alignSelf: "flex-end" }}>
           <span>{isMenuOpen ? "X" : "☰"}</span>
@@ -63,6 +68,10 @@ function Nav({
   ) : (
     <div className="">
       <header>
+        {/* <div className="logo-img">
+          {" "}
+          <img src={logo} alt="" />
+        </div> */}
         <span className="logo">Songzy</span>
       </header>
       <nav

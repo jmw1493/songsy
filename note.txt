@@ -31,11 +31,11 @@ x - 11. figure out how to compress images (function?)
 x - 12. my songs come in by created date
 
 UI
-13. everything (esp explore page) works and looks good on mobile
-14. better submit song UI
-15. better loading ui
-16. routing
-17. songmodal positions on top when screen size isn't big enough for song modal and one photo at current imgPx()
+x - 13. songmodal positions on top when screen size isn't big enough for song modal and one photo at current imgPx()
+14. everything (esp explore page) works and looks good on mobile
+15. better submit song UI
+16. better loading ui
+17. routing
 
 Artist name
 18. user can create their artist name
