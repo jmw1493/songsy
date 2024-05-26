@@ -75,7 +75,6 @@ function ExplorePage({ user }: ExplorePageProps) {
     const numOfHorizontalImages = Math.round(
       (window.innerWidth - padding) / imgSize
     );
-    console.log(numOfHorizontalImages);
     return numOfHorizontalImages === 1;
   }
 
@@ -99,7 +98,6 @@ function ExplorePage({ user }: ExplorePageProps) {
     song: Schema["Song"]["type"],
     event: React.MouseEvent<HTMLDivElement>
   ) {
-    // console.log("event.currentTarget", event.currentTarget);
     const rect = event.currentTarget.getBoundingClientRect();
     const gridRect = gridRef.current?.getBoundingClientRect();
 

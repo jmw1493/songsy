@@ -7,6 +7,7 @@ import { AuthUser } from "aws-amplify/auth";
 import "@aws-amplify/ui-react/styles.css";
 import SongWithPlaceholder from "./SongWithPlaceholder";
 import { CircularProgress } from "@mui/material";
+import "./MySongs.css";
 
 const client = generateClient<Schema>();
 
@@ -38,8 +39,9 @@ function MySongs({ user }: MySongsProps) {
   }, [user]);
 
   return (
-    <div>
+    <div className="my-songs-container">
       <h2>My songs</h2>
+      <br />
       <br />
       {retrievingSongs ? (
         <CircularProgress />
@@ -49,7 +51,6 @@ function MySongs({ user }: MySongsProps) {
         })
       ) : (
         <div>
-          <br />
           <p>You don't have any songs.</p>
         </div>
       )}

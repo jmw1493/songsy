@@ -1,12 +1,16 @@
 .song-container {
-  display: flex;
+  width: 100%;
+  max-width: 500px;
   margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
 }
 
 .song-container .image-container {
   width: 150px;
   height: 150px;
   margin-right: 15px;
+  flex: 0 0 auto;
 }
 
 .song-container .image {
@@ -29,6 +33,11 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  flex: 1 1 auto;
+}
+
+.right audio {
+  width: 100%;
 }
 
 .song-container .right button {

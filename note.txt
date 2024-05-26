@@ -36,18 +36,19 @@ x - 13. songmodal positions on top when screen size isn't big enough for song mo
 15. better submit song UI
 16. better loading ui
 17. routing
+18. images are compressing and loading properly
 
 Artist name
-18. user can create their artist name
-19. author (username) of song appears in songmodal
+19. user can create their artist name
+20. author (username) of song appears in songmodal
 
 Song likes
-20. can like songs - user creates like, read all liked songs for user, user delete like
+21. can like songs - user creates like, read all liked songs for user, user delete like
 
 Extra
-21. explore page - load more when screen size changes
-22. explore page - load more when scroll to bottom
-23. explore page - songs are in order of most recently created
+22. explore page - load more when screen size changes
+23. explore page - load more when scroll to bottom
+24. explore page - songs are in order of most recently created
   - maybe show the songs you've made?
 
 

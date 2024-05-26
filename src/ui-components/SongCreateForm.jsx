@@ -83,6 +83,8 @@ export default function SongCreateForm(props) {
       rowGap="15px"
       columnGap="15px"
       padding="20px"
+      width={"100%"}
+      maxWidth={"700px"}
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {

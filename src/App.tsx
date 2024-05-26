@@ -28,8 +28,17 @@ function App() {
   }, []);
 
   const uploadSongPage = (
-    <div>
+    <div
+      style={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <h1>Upload Song</h1>
+      <br />
       <SongCreateForm />
     </div>
   );
