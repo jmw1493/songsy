@@ -35,9 +35,10 @@ x - 10. improve home page to have side nav - upload song, my songs, my likes, ex
 16. explore page works on mobile
 17. better loading ui
 18. better submit song UI
-19. explore page - load more when screen size changes
-20. explore page - load more when scroll to bottom
-21. explore page - songs are in order of most recently created
+19. routing
+20. explore page - load more when screen size changes
+21. explore page - load more when scroll to bottom
+22. explore page - songs are in order of most recently created
   - maybe show the songs you've made?
 
 
