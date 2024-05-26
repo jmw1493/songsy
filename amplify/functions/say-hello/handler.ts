@@ -8,9 +8,6 @@ const bucketName = process.env.SONGZY_FILES_BUCKET_NAME ?? "";
 export const handler: S3Handler = async (event) => {
   const imageMimeType = /^image\//;
 
-  const objectKeys = event.Records.map((record) => record.s3.object.key);
-  console.log(`Upload handler invoked for objects [${objectKeys.join(", ")}]`);
-
   const uploadedFilesContainImage = event.Records.some((record) => {
     return imageMimeType.test(record.s3.object.key);
   });
@@ -21,13 +18,9 @@ export const handler: S3Handler = async (event) => {
     return;
   }
 
-  console.log("Yes images");
-  console.log("bucket name", bucketName);
-
   for (const record of event.Records) {
     const key = record.s3.object.key;
     if (!imageMimeType.test(key)) {
-      console.log(`File ${key} is not an image, skipping...`);
       continue;
     }
     try {
@@ -35,20 +28,22 @@ export const handler: S3Handler = async (event) => {
         .getObject({ Bucket: bucketName, Key: key })
         .promise();
 
-      console.log("s3Object", s3Object);
       const imageBuffer = s3Object.Body as Buffer;
 
       // Compress the image
-      console.log("jimp reading");
-
       const image = await Jimp.read(imageBuffer);
-      console.log("jimp read");
 
-      // Resize and compress the image
-      image.resize(300, Jimp.AUTO).quality(80); // Resize to 300px width and adjust JPEG quality
-      console.log("about to compressedImageBuffer");
+      // Ensure correct orientation using EXIF data
+      image.rotate(0); // This corrects the orientation based on EXIF data
+
+      // Resize the image, making sure not to upscale
+      if (image.getWidth() > 300) {
+        image.resize(300, Jimp.AUTO);
+      }
+
+      image.quality(80); // Adjust JPEG quality
+
       const compressedImageBuffer = await image.getBufferAsync(Jimp.MIME_JPEG);
-      console.log(compressedImageBuffer);
 
       // Upload the compressed image back to S3
       await s3

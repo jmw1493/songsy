@@ -27,7 +27,11 @@ function MySongs({ user }: MySongsProps) {
       },
     }).subscribe({
       next: (data) => {
-        setSongs([...data.items]);
+        const sortedSongs = data.items.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        setSongs(sortedSongs);
         setRetrievingSongs(false);
       },
     });
