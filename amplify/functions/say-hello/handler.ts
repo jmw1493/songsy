@@ -34,12 +34,15 @@ export const handler: S3Handler = async (event) => {
       const s3Object = await s3
         .getObject({ Bucket: bucketName, Key: key })
         .promise();
+
+      console.log("s3Object", s3Object);
       const imageBuffer = s3Object.Body as Buffer;
 
       // Compress the image
       const image = await Jimp.read(imageBuffer);
       // Resize and compress the image
       image.resize(300, Jimp.AUTO).quality(80); // Resize to 300px width and adjust JPEG quality
+      console.log("about to compressedImageBuffer");
       const compressedImageBuffer = await image.getBufferAsync(Jimp.MIME_JPEG);
       console.log(compressedImageBuffer);
 

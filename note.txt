@@ -27,16 +27,16 @@ x - 7. fill out explore page
 x - 8. audio player to work perfectly on explore page
 x - 9. song popup on explore page
 x - 10. improve home page to have side nav - upload song, my songs, my likes, explore
-11. can like songs - user creates like, read all liked songs for user, user delete like
-12. user can create their artist name
-13. author (username) of song appears in songmodal
-14. figure out how to compress images (function?)
-15. songmodal positions on top when screen size isn't big enough for song modal and one photo at current imgPx()
-16. my songs come in by created date
-17. better loading ui
-18. better submit song UI
-19. everything (esp explore page) works on mobile
-20. routing
+11. figure out how to compress images (function?)
+12. my songs come in by created date
+13. better submit song UI
+14. everything (esp explore page) works and looks good on mobile
+15. better loading ui
+16. routing
+17. user can create their artist name
+18. author (username) of song appears in songmodal
+19. songmodal positions on top when screen size isn't big enough for song modal and one photo at current imgPx()
+20. can like songs - user creates like, read all liked songs for user, user delete like
 21. explore page - load more when screen size changes
 22. explore page - load more when scroll to bottom
 23. explore page - songs are in order of most recently created
