@@ -1,6 +1,6 @@
 import { S3Handler } from "aws-lambda";
 import AWS from "aws-sdk";
-import sharp from "sharp";
+import Jimp from "jimp";
 
 const s3 = new AWS.S3();
 const bucketName = process.env.SONGZY_FILES_BUCKET_NAME ?? "";
@@ -35,12 +35,19 @@ export const handler: S3Handler = async (event) => {
         .getObject({ Bucket: bucketName, Key: key })
         .promise();
       const imageBuffer = s3Object.Body as Buffer;
+
       // Compress the image
-      const compressedImageBuffer = await sharp(imageBuffer)
-        .resize({ width: 800 }) // Resize to 800px width, change as needed
-        .jpeg({ quality: 80 }) // Adjust JPEG quality, change as needed
-        .toBuffer();
+      const image = await Jimp.read(imageBuffer);
+      // Resize and compress the image
+      image.resize(300, Jimp.AUTO).quality(80); // Resize to 300px width and adjust JPEG quality
+      const compressedImageBuffer = await image.getBufferAsync(Jimp.MIME_JPEG);
       console.log(compressedImageBuffer);
+
+      // const compressedImageBuffer = await sharp(imageBuffer)
+      //   .resize({ width: 800 }) // Resize to 800px width, change as needed
+      //   .jpeg({ quality: 80 }) // Adjust JPEG quality, change as needed
+      //   .toBuffer();
+      // console.log(compressedImageBuffer);
 
       // Upload the compressed image back to S3
       await s3

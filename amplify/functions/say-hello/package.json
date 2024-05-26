@@ -2,6 +2,6 @@
   "type": "module",
   "dependencies": {
     "aws-sdk": "^2.1628.0",
-    "sharp": "^0.33.4"
+    "jimp": "^0.22.12"
   }
 }
