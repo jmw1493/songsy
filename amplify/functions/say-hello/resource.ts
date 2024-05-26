@@ -5,6 +5,6 @@ export const sayHello = defineFunction({
   name: "say-hello",
   // optionally specify a path to your handler (defaults to "./handler.ts")
   entry: "./handler.ts",
-  timeoutSeconds: 60,
+  timeoutSeconds: 10,
   memoryMB: 1024,
 });

@@ -50,12 +50,6 @@ export const handler: S3Handler = async (event) => {
       const compressedImageBuffer = await image.getBufferAsync(Jimp.MIME_JPEG);
       console.log(compressedImageBuffer);
 
-      // const compressedImageBuffer = await sharp(imageBuffer)
-      //   .resize({ width: 800 }) // Resize to 800px width, change as needed
-      //   .jpeg({ quality: 80 }) // Adjust JPEG quality, change as needed
-      //   .toBuffer();
-      // console.log(compressedImageBuffer);
-
       // Upload the compressed image back to S3
       await s3
         .putObject({
