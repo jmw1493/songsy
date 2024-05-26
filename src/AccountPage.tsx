@@ -9,6 +9,11 @@ function AccountPage({
       <h2>Account page</h2>
       <br />
       <br />
+      <br />
+      <p>Ability to create artist name coming soon.</p>
+      <br />
+      <br />
+      <br />
       <button
         onClick={() => {
           if (signOut) signOut();

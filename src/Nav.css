@@ -4,17 +4,6 @@
   align-items: center;
 }
 
-.logo {
-  font-size: 40px;
-  /* font-weight: bold; */
-  /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  letter-spacing: 2px; */
-  background: linear-gradient(90deg, #ff00d4, #7443bd);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 /* .logo-img {
   height: 150px;
   width: 150px;

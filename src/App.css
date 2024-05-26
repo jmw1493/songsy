@@ -1,7 +1,7 @@
 .song-container {
   width: 100%;
   max-width: 500px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
   display: flex;
   justify-content: center;
 }
@@ -67,4 +67,50 @@
 
 .overlay {
   background: rgba(62, 62, 62, 0.2);
+}
+
+.logo {
+  font-size: 40px;
+  /* font-weight: bold; */
+  /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  letter-spacing: 2px; */
+  background: linear-gradient(90deg, #ff00d4, #7443bd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* position: absolute;
+  top: 0;
+  left: 20px; */
+}
+
+.logo.auth {
+  position: absolute;
+  top: 20px;
+}
+
+[data-amplify-authenticator] {
+  height: 100vh;
+  --amplify-components-tabs-item-active-color: #646cff;
+  --amplify-components-button-primary-background-color: #646cff;
+  --amplify-components-tabs-item-active-border-color: #646cff;
+  background-color: black !important;
+  /* --amplify-components-authenticator-router-box-shadow: 0 0 16px var(--amplify-colors-overlay-10);
+  --amplify-components-authenticator-router-border-width: 0;
+  --amplify-components-authenticator-form-padding: var(--amplify-space-medium) var(--amplify-space-xl) var(--amplify-space-xl);
+  --amplify-components-fieldcontrol-focus-box-shadow: 0 0 0 2px var(--amplify-colors-purple-60);
+  --amplify-components-tabs-item-active-border-color: var(--amplify-colors-neutral-100);
+  --amplify-components-button-link-color: var(--amplify-colors-purple-80); */
+}
+
+[data-amplify-router] {
+  background-color: black;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+#signIn-panel,
+#signUp-panel,
+#signIn-tab,
+#signUp-tab {
+  background-color: black;
 }

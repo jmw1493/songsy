@@ -126,7 +126,10 @@ function ExplorePage({ user }: ExplorePageProps) {
   }
 
   return (
-    <div className={currentSong ? "overlay" : ""}>
+    <div
+    // className={currentSong ? "overlay" : ""}
+    >
+      <h2>Explore</h2>
       <section className="slider-container">
         <Box sx={{ width: 200 }}>
           <Slider value={sliderValue} onChange={handleSliderChange} />

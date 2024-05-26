@@ -40,7 +40,7 @@ function MySongs({ user }: MySongsProps) {
 
   return (
     <div className="my-songs-container">
-      <h2>My songs</h2>
+      <h2>My Songs</h2>
       <br />
       <br />
       {retrievingSongs ? (

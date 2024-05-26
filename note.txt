@@ -32,12 +32,12 @@ x - 12. my songs come in by created date
 
 UI
 x - 13. everything (esp explore page) works and looks good on mobile
-14. songmodal positions on top when screen size isn't big enough for song modal to go off to side
+14. better submit song UI
+15. better loading ui
+16. better login screen
+17. images are compressing and loading properly
+18. songmodal positions on top when screen size isn't big enough for song modal to go off to side
   - maybe determine if it's best to put modal left, right, up, and/or down, and how much to that/those directions (maybe for small screen you offset the modal 50% in the x direction)
-15. better submit song UI
-16. better loading ui
-17. better login screen
-18. images are compressing and loading properly
 19. routing
 
 Artist name

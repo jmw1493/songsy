@@ -30,15 +30,15 @@ function App() {
   const uploadSongPage = (
     <div
       style={{
-        height: "100%",
+        // height: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
-      <h1>Upload Song</h1>
-      <br />
+      <h2>Upload Song</h2>
+      {/* <br /> */}
       <SongCreateForm />
     </div>
   );
@@ -65,9 +65,25 @@ function App() {
   }
 
   return (
-    <Authenticator>
+    <Authenticator
+      components={{
+        Header() {
+          return (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <div className="logo auth">Songzy</div>
+            </div>
+          );
+        },
+      }}
+    >
       {({ user, signOut }) => (
-        <div style={{ height: "100%" }}>
+        <div style={{ height: "100vh" }}>
           <div
             style={
               isMobile
