@@ -1,11 +1,11 @@
 import { S3Handler } from "aws-lambda";
-import AWS from "aws-sdk";
-import Jimp from "jimp";
+// import AWS from "aws-sdk";
+// import Jimp from "jimp";
 
-const s3 = new AWS.S3();
-const bucketName = process.env.SONGZY_FILES_BUCKET_NAME ?? "";
-const compressedTagKey = "compressed";
-const compressedTagValue = "true";
+// const s3 = new AWS.S3();
+// const bucketName = process.env.SONGZY_FILES_BUCKET_NAME ?? "";
+// const compressedTagKey = "compressed";
+// const compressedTagValue = "true";
 
 export const handler: S3Handler = async (event) => {
   const imageMimeType = /^image\//;
@@ -20,81 +20,83 @@ export const handler: S3Handler = async (event) => {
     return;
   }
 
-  for (const record of event.Records) {
-    const key = record.s3.object.key;
-    if (!imageMimeType.test(key)) {
-      continue;
-    }
-    try {
-      const tagging = await s3
-        .getObjectTagging({
-          Bucket: bucketName,
-          Key: key,
-        })
-        .promise();
+  console.log("yes images");
 
-      const isCompressed = tagging.TagSet.some(
-        (tag) =>
-          tag.Key === compressedTagKey && tag.Value === compressedTagValue
-      );
+  // for (const record of event.Records) {
+  //   const key = record.s3.object.key;
+  //   if (!imageMimeType.test(key)) {
+  //     continue;
+  //   }
+  //   try {
+  //     const tagging = await s3
+  //       .getObjectTagging({
+  //         Bucket: bucketName,
+  //         Key: key,
+  //       })
+  //       .promise();
 
-      if (isCompressed) {
-        console.log(`Image ${key} is already compressed.`);
-        continue;
-      }
+  //     const isCompressed = tagging.TagSet.some(
+  //       (tag) =>
+  //         tag.Key === compressedTagKey && tag.Value === compressedTagValue
+  //     );
 
-      const s3Object = await s3
-        .getObject({ Bucket: bucketName, Key: key })
-        .promise();
+  //     if (isCompressed) {
+  //       console.log(`Image ${key} is already compressed.`);
+  //       continue;
+  //     }
 
-      const imageBuffer = s3Object.Body as Buffer;
+  //     const s3Object = await s3
+  //       .getObject({ Bucket: bucketName, Key: key })
+  //       .promise();
 
-      // Compress the image
-      const image = await Jimp.read(imageBuffer);
+  //     const imageBuffer = s3Object.Body as Buffer;
 
-      // Ensure correct orientation using EXIF data
-      image.rotate(0); // This corrects the orientation based on EXIF data
+  //     // Compress the image
+  //     const image = await Jimp.read(imageBuffer);
 
-      // Resize the image, making sure not to upscale
-      if (image.getWidth() > 300) {
-        image.resize(300, Jimp.AUTO);
-      }
+  //     // Ensure correct orientation using EXIF data
+  //     image.rotate(0); // This corrects the orientation based on EXIF data
 
-      image.quality(80); // Adjust JPEG quality
+  //     // Resize the image, making sure not to upscale
+  //     if (image.getWidth() > 300) {
+  //       image.resize(300, Jimp.AUTO);
+  //     }
 
-      const compressedImageBuffer = await image.getBufferAsync(Jimp.MIME_JPEG);
+  //     image.quality(80); // Adjust JPEG quality
 
-      // Upload the compressed image back to S3
-      await s3
-        .putObject({
-          Bucket: bucketName,
-          Key: key,
-          Body: compressedImageBuffer,
-          ContentType: s3Object.ContentType,
-        })
-        .promise();
+  //     const compressedImageBuffer = await image.getBufferAsync(Jimp.MIME_JPEG);
 
-      // Add a tag to mark the image as compressed
-      await s3
-        .putObjectTagging({
-          Bucket: bucketName,
-          Key: key,
-          Tagging: {
-            TagSet: [
-              {
-                Key: compressedTagKey,
-                Value: compressedTagValue,
-              },
-            ],
-          },
-        })
-        .promise();
+  //     // Upload the compressed image back to S3
+  //     await s3
+  //       .putObject({
+  //         Bucket: bucketName,
+  //         Key: key,
+  //         Body: compressedImageBuffer,
+  //         ContentType: s3Object.ContentType,
+  //       })
+  //       .promise();
 
-      console.log(`Successfully compressed and uploaded image ${key}`);
-    } catch (e) {
-      console.error(`Failed to process image ${key}:`, e);
-    }
-  }
+  //     // Add a tag to mark the image as compressed
+  //     await s3
+  //       .putObjectTagging({
+  //         Bucket: bucketName,
+  //         Key: key,
+  //         Tagging: {
+  //           TagSet: [
+  //             {
+  //               Key: compressedTagKey,
+  //               Value: compressedTagValue,
+  //             },
+  //           ],
+  //         },
+  //       })
+  //       .promise();
+
+  //     console.log(`Successfully compressed and uploaded image ${key}`);
+  //   } catch (e) {
+  //     console.error(`Failed to process image ${key}:`, e);
+  //   }
+  // }
 };
 
 // songzy-files_BUCKET_NAME
