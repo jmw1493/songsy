@@ -1,5 +1,5 @@
 import { defineStorage } from "@aws-amplify/backend";
-import { compressImage } from "../functions/compressImage/resource";
+import { compressImage } from "../functions/compress-image/resource";
 
 export const storage = defineStorage({
   name: "songzy-files",
