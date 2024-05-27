@@ -5,6 +5,6 @@ export const compressImage = defineFunction({
   name: "compress-image",
   // optionally specify a path to your handler (defaults to "./handler.ts")
   entry: "./handler.ts",
-  timeoutSeconds: 10,
+  timeoutSeconds: 60,
   memoryMB: 1024,
 });
