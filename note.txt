@@ -33,7 +33,7 @@ x - 12. my songs come in by created date
 UI most imp
 x - 13. everything (esp explore page) works and looks good on mobile
 x - 14. better login screen
-15. better submit song UI
+x - 15. better submit song UI
 16. better loading ui
 17. images are compressing and loading properly
 
