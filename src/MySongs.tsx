@@ -38,6 +38,11 @@ function MySongs({ user }: MySongsProps) {
     });
   }, [user]);
 
+  function deleteSong(id: string) {
+    client.models.Song.delete({ id });
+    setSongs((prevSongs) => prevSongs.filter((song) => song.id !== id));
+  }
+
   return (
     <div className="my-songs-container">
       <h2>My Songs</h2>
@@ -47,7 +52,13 @@ function MySongs({ user }: MySongsProps) {
         <CircularProgress />
       ) : songs.length > 0 ? (
         songs.map((song) => {
-          return <SongWithPlaceholder key={song.id} song={song} />;
+          return (
+            <SongWithPlaceholder
+              key={song.id}
+              song={song}
+              deleteSong={deleteSong}
+            />
+          );
         })
       ) : (
         <div>

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 function UploadSongPage() {
   const [showConfirmation, setShowConfirmation] = useState(false);
-  console.log(showConfirmation);
+
   return (
     <div
       style={{

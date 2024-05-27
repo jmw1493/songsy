@@ -2,17 +2,15 @@ import { useEffect, useState } from "react";
 import { StorageImage } from "@aws-amplify/ui-react-storage";
 import type { Schema } from "../amplify/data/resource";
 import { getUrl } from "aws-amplify/storage";
-import { generateClient } from "aws-amplify/data";
 import "@aws-amplify/ui-react/styles.css";
 import LazyLoad from "react-lazyload";
 
 type ExpectedProps = {
   song: Schema["Song"]["type"];
+  deleteSong: (id: string) => void;
 };
 
-const client = generateClient<Schema>();
-
-function SongWithPlaceholder({ song }: ExpectedProps) {
+function SongWithPlaceholder({ song, deleteSong }: ExpectedProps) {
   // const [imageIsLoading, setImageIsLoading] = useState<boolean>(true);
   const [audioUrl, setAudioUrl] = useState<string>("");
 
@@ -45,10 +43,6 @@ function SongWithPlaceholder({ song }: ExpectedProps) {
       console.error("Error getting URL from S3:", e);
       throw new Error("Could not get URL from S3");
     }
-  }
-
-  function deleteSong(id: string) {
-    client.models.Song.delete({ id });
   }
 
   return (
