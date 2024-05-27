@@ -42,7 +42,12 @@ function App() {
       case Pages.Explore:
         return <ExplorePage user={user} />;
       case Pages.Account:
-        return <AccountPage signOut={signOut} />;
+        return (
+          <AccountPage
+            // user={user}
+            signOut={signOut}
+          />
+        );
       default:
         return <UploadSongPage />;
     }
