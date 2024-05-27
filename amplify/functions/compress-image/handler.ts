@@ -39,14 +39,28 @@ export const handler: S3Handler = async (event) => {
 
       const imageBuffer = s3Object.Body as Buffer;
 
-      const rotatedProperly = await jo.rotate(imageBuffer, {});
-      console.log(`rotated`);
+      // const rotatedProperly = await jo.rotate(imageBuffer, {});
+      // console.log(`rotated`);
+
+      let rotatedImageBuffer: Buffer;
+      try {
+        // Use jpeg-autorotate to correct orientation
+        const { buffer } = await jo.rotate(imageBuffer, {});
+        rotatedImageBuffer = buffer;
+      } catch (error: unknown) {
+        if (
+          error instanceof Error &&
+          error.message === "Orientation already correct"
+        ) {
+          console.log(`Image ${key} orientation is already correct.`);
+          rotatedImageBuffer = imageBuffer; // Use the original buffer
+        } else {
+          throw error; // Re-throw unexpected errors
+        }
+      }
 
       // Compress the image
-      const image = await Jimp.read(rotatedProperly.buffer);
-
-      // Ensure correct orientation using EXIF data
-      image.rotate(0); // This corrects the orientation based on EXIF data
+      const image = await Jimp.read(rotatedImageBuffer);
 
       // Resize the image, making sure not to upscale
       if (image.getWidth() > 300) {
