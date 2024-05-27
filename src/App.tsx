@@ -4,13 +4,13 @@ import "@aws-amplify/ui-react/styles.css";
 import { AuthUser } from "aws-amplify/auth";
 // import ProfilePage from "./ProfilePage";
 import ExplorePage from "./ExplorePage";
-import SongCreateForm from "./ui-components/SongCreateForm";
 import MySongs from "./MySongs";
 import LikedSongsPage from "./LikedSongsPage";
 import "./App.css";
 import AccountPage from "./AccountPage";
 import Nav from "./Nav";
 import { Pages } from "./constants";
+import UploadSongPage from "./UploadSongPage";
 
 function App() {
   const [page, setPage] = useState(Pages.UploadSong);
@@ -27,22 +27,6 @@ function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const uploadSongPage = (
-    <div
-      style={{
-        // height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <h2>Upload Song</h2>
-      {/* <br /> */}
-      <SongCreateForm />
-    </div>
-  );
-
   function renderComponent(
     user: AuthUser | undefined,
     // eslint-disable-next-line
@@ -50,7 +34,7 @@ function App() {
   ): JSX.Element {
     switch (page) {
       case Pages.UploadSong:
-        return uploadSongPage;
+        return <UploadSongPage />;
       case Pages.MySongs:
         return <MySongs user={user} />;
       case Pages.LikedSongs:
@@ -60,7 +44,7 @@ function App() {
       case Pages.Account:
         return <AccountPage signOut={signOut} />;
       default:
-        return uploadSongPage;
+        return <UploadSongPage />;
     }
   }
 
