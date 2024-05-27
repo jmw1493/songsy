@@ -1,6 +1,7 @@
 import { S3Handler } from "aws-lambda";
 import AWS from "aws-sdk";
 import Jimp from "jimp";
+import jo from "jpeg-autorotate";
 
 const s3 = new AWS.S3();
 const bucketName = process.env.SONGZY_FILES_BUCKET_NAME ?? "";
@@ -26,23 +27,6 @@ export const handler: S3Handler = async (event) => {
       continue;
     }
     try {
-      // const tagging = await s3
-      //   .getObjectTagging({
-      //     Bucket: bucketName,
-      //     Key: key,
-      //   })
-      //   .promise();
-
-      // const isCompressed = tagging.TagSet.some(
-      //   (tag) =>
-      //     tag.Key === compressedTagKey && tag.Value === compressedTagValue
-      // );
-
-      // if (isCompressed) {
-      //   console.log(`Image ${key} is already compressed.`);
-      //   continue;
-      // }
-
       const s3Object = await s3
         .getObject({ Bucket: bucketName, Key: key })
         .promise();
@@ -55,8 +39,11 @@ export const handler: S3Handler = async (event) => {
 
       const imageBuffer = s3Object.Body as Buffer;
 
+      const rotatedProperly = await jo.rotate(imageBuffer, {});
+      console.log(`rotated`);
+
       // Compress the image
-      const image = await Jimp.read(imageBuffer);
+      const image = await Jimp.read(rotatedProperly.buffer);
 
       // Ensure correct orientation using EXIF data
       image.rotate(0); // This corrects the orientation based on EXIF data
