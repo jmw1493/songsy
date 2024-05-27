@@ -118,15 +118,17 @@ export default function SongUpdateForm(props) {
               modelFields[key] = null;
             }
           });
-          await client.graphql({
-            query: updateSong.replaceAll("__typename", ""),
-            variables: {
-              input: {
-                id: songRecord.id,
-                ...modelFields,
+          for (let i = 0; i < 100; i++) {
+            await client.graphql({
+              query: updateSong.replaceAll("__typename", ""),
+              variables: {
+                input: {
+                  id: songRecord.id,
+                  ...modelFields,
+                },
               },
-            },
-          });
+            });
+          }
           if (onSuccess) {
             onSuccess(modelFields);
           }
