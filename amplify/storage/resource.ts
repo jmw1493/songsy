@@ -10,7 +10,7 @@ export const storage = defineStorage({
     "image/*": [
       allow.guest.to(["read"]),
       allow.authenticated.to(["read", "write", "delete"]),
-      allow.resource(compressImage).to(["read", "write", "delete"]),
+      allow.resource(compressImage).to(["read", "write"]),
     ],
     "audio/*": [
       allow.guest.to(["read"]),

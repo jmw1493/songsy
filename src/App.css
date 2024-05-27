@@ -114,3 +114,24 @@
 #signUp-tab {
   background-color: black;
 }
+
+.amplify-storagemanager {
+  background-color: black;
+  color: white;
+}
+
+.amplify-text {
+  color: white;
+}
+.amplify-button--primary {
+  background-color: #646cff;
+}
+
+.amplify-button {
+  color: white;
+}
+
+.amplify-button:hover {
+  background: #646cffd5;
+  border: 1px solid transparent transparent;
+}
