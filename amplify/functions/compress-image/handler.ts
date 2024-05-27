@@ -4,8 +4,6 @@ import Jimp from "jimp";
 
 const s3 = new AWS.S3();
 const bucketName = process.env.SONGZY_FILES_BUCKET_NAME ?? "";
-const compressedTagKey = "compressed";
-const compressedTagValue = "true";
 
 export const handler: S3Handler = async (event) => {
   const imageMimeType = /^image\//;
@@ -28,26 +26,32 @@ export const handler: S3Handler = async (event) => {
       continue;
     }
     try {
-      const tagging = await s3
-        .getObjectTagging({
-          Bucket: bucketName,
-          Key: key,
-        })
-        .promise();
+      // const tagging = await s3
+      //   .getObjectTagging({
+      //     Bucket: bucketName,
+      //     Key: key,
+      //   })
+      //   .promise();
 
-      const isCompressed = tagging.TagSet.some(
-        (tag) =>
-          tag.Key === compressedTagKey && tag.Value === compressedTagValue
-      );
+      // const isCompressed = tagging.TagSet.some(
+      //   (tag) =>
+      //     tag.Key === compressedTagKey && tag.Value === compressedTagValue
+      // );
 
-      if (isCompressed) {
-        console.log(`Image ${key} is already compressed.`);
-        continue;
-      }
+      // if (isCompressed) {
+      //   console.log(`Image ${key} is already compressed.`);
+      //   continue;
+      // }
 
       const s3Object = await s3
         .getObject({ Bucket: bucketName, Key: key })
         .promise();
+
+      const objectMetadata = s3Object.Metadata;
+      if (objectMetadata && objectMetadata["compressed"]) {
+        console.log(`Image ${key} is already compressed.`);
+        continue;
+      }
 
       const imageBuffer = s3Object.Body as Buffer;
 
@@ -73,21 +77,8 @@ export const handler: S3Handler = async (event) => {
           Key: key,
           Body: compressedImageBuffer,
           ContentType: s3Object.ContentType,
-        })
-        .promise();
-
-      // Add a tag to mark the image as compressed
-      await s3
-        .putObjectTagging({
-          Bucket: bucketName,
-          Key: key,
-          Tagging: {
-            TagSet: [
-              {
-                Key: compressedTagKey,
-                Value: compressedTagValue,
-              },
-            ],
+          Metadata: {
+            compressed: "true",
           },
         })
         .promise();
